@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style type="text/css">
+    div#memory_board {
+        background:#CCC;
+        border:#999 1px solid;
+        width:800px;
+        height:540px;
+        padding:24px;
+        margin:0px auto;
+    }
+    div#memory_board > div {
+        background: url(kockica.jpg) no-repeat;
+        border: #000 1px solid;
+        width: 71px;
+        height: 71px;
+        float: left;
+        margin: 10px; 
+        padding: 20px;
+    //    font-size: 64px;
+        cursor: pointer;
+    //    text-align: center;
+    }
+    div#memory_board.innerHTML > div  {
+        float:left;
+    }
+    
+</style>
+<script>
+
+//    function createImage(src) {
+  //      var img = new Image();
+//        img.src = src;
+//        return img;
+//    }
+    
+//function sound(src) {
+//    this.sound = document.createElement("audio");
+//    this.sound.src = src;
+//    this.sound.setAttribute("preload", "auto");
+//    this.sound.setAttribute("controls", "none");
+//    this.sound.style.display = "none";
+//    document.body.appendChild(this.sound);
+//    this.play = function()  {
+//        this.sound.play();
+//    }
+//}
+    // src = "";
+    var  myMacka = new Audio("macka.wav");
+    var  myPatka = new Audio("patka.wav");
+    var  myPetao = new Audio("petao.wav");
+    var  myKonj  = new Audio("konj.wav");
+    var  myKoka  = new Audio("koka.wav");
+    var  myOvca  = new Audio("ovca.wav");
+    var  myPas  = new Audio("pas.wav");
+    var  myKrava  = new Audio("krava.wav");
+    var  mySvinja  = new Audio("svinja.wav");
+    var  myGuska  = new Audio("guska.wav");
+    var  myPile  = new Audio("pile.wav");
+    var  mySlon  = new Audio("slon.wav");
+    var  myPobeda = new Audio("pobeda.mp3");
+
+
+    
+    
+    var createImage = function(src) {
+   // title = title.replace(/"/g,"&quot;");
+    return '<img src='+src + ' />';
+    }
+    
+    
+    var Zvukovi = [
+        myMacka,
+        myPatka,
+        myPetao,
+        myKoka,
+        myOvca,
+        myPas,
+        myKrava,
+        mySvinja,
+        myGuska,
+        myPile,
+        mySlon,
+        myKonj,
+        myPobeda
+    ];
+    
+ //   Zvukovi[0].loop = true;
+  //  Zvukovi[0].play();
+    
+    var memory_array = [
+        createImage("maca_mala.jpg"),createImage("maca_mala.jpg"),
+        createImage("patka_mala.jpg"),createImage("patka_mala.jpg"),
+        createImage("petao_mali.jpg"),createImage("petao_mali.jpg"),
+        createImage("koka_mala.jpg"),createImage("koka_mala.jpg"),
+        createImage("ovca_mala.jpg"),createImage("ovca_mala.jpg"),
+        createImage("pas_mali.jpg"),createImage("pas_mali.jpg"),
+        createImage("krava_mala.jpg"),createImage("krava_mala.jpg"),
+        createImage("svinja_mala.jpg"),createImage("svinja_mala.jpg"),
+        createImage("guska_mala.jpg"),createImage("guska_mala.jpg"),
+        createImage("pile_malo.jpg"),createImage("pile_malo.jpg"),
+        createImage("slon_mali.jpg"),createImage("slon_mali.jpg"),
+        createImage("konj_mali.jpg"),createImage("konj_mali.jpg")
+        ];
+    
+    var memory_values = [];
+    var memory_tile_ids = [];
+    var tiles_flipped = 0;
+    Array.prototype.memory_tile_shuffle = function()  {
+        var i = this.length, j, temp, rezultat = 0,zvuk;
+        while(--i > 0)  {
+            j = Math.floor(Math.random() * (i+1));
+            temp = this[j];
+            this[j] = this[i];
+            this[i] = temp;
+         //   zvuk = Zvukovi[j];
+         //   Zvukovi[j]=Zvukovi[i];
+         //   Zvukovi[i]=zvuk;
+        }
+    }
+
+    function newBoard()  {
+		rezultat = 0;
+        tiles_flipped = 0;
+        var output = '';
+        memory_array.memory_tile_shuffle();
+        for(var i = 0; i< memory_array.length; i++)  {
+                
+            output += '<div id="tile_';
+            output += i;;
+            output += '" onclick="memoryFlipTile(this,\'';
+            output += memory_array[i];
+            output += '\')"></div>';
+        }
+  
+        document.getElementById('memory_board').innerHTML = output;
+    }
+    
+    function memoryFlipTile(tile,val)  {
+        if(tile.innerHTML == "" && memory_values.length < 2)  {
+            tile.style.background = '#FFF';
+            tile.innerHTML = val;
+            if(memory_values.length == 0)  {
+                memory_values.push(val);
+
+                if(memory_values[0] == "<img src=maca_mala.jpg />") {
+                    Zvukovi[0].play();
+                }; 
+                if(memory_values[0] == "<img src=patka_mala.jpg />") {
+                    Zvukovi[1].play();
+                };
+                if(memory_values[0] == "<img src=petao_mali.jpg />") {
+                    Zvukovi[2].play();
+                };
+                if(memory_values[0] == "<img src=koka_mala.jpg />") {
+                    Zvukovi[3].play();
+                };
+                if(memory_values[0] == "<img src=ovca_mala.jpg />") {
+                    Zvukovi[4].play();
+                }; 
+                if(memory_values[0] == "<img src=pas_mali.jpg />") {
+                    Zvukovi[5].play();
+                };
+                if(memory_values[0] == "<img src=krava_mala.jpg />") {
+                    Zvukovi[6].play();
+                };
+                if(memory_values[0] == "<img src=svinja_mala.jpg />") {
+                    Zvukovi[7].play();
+                };
+                if(memory_values[0] == "<img src=guska_mala.jpg />") {
+                    Zvukovi[8].play();
+                }; 
+                if(memory_values[0] == "<img src=pile_malo.jpg />") {
+                    Zvukovi[9].play();
+                };
+                if(memory_values[0] == "<img src=slon_mali.jpg />") {
+                    Zvukovi[10].play();
+                };
+                if(memory_values[0] == "<img src=konj_mali.jpg />") {
+                    Zvukovi[11].play();
+                };
+                memory_tile_ids.push(tile.id);
+				rezultat += 1;
+            } else if(memory_values.length == 1)  {
+                memory_values.push(val); 
+                memory_tile_ids.push(tile.id);
+   
+                if(memory_values[1] == "<img src=maca_mala.jpg />") {
+                    Zvukovi[0].play();
+                }; 
+                if(memory_values[1] == "<img src=patka_mala.jpg />") {
+                    Zvukovi[1].play();
+                };
+                if(memory_values[1] == "<img src=petao_mali.jpg />") {
+                    Zvukovi[2].play();
+                };
+                if(memory_values[1] == "<img src=koka_mala.jpg />") {
+                    Zvukovi[3].play();
+                };
+                if(memory_values[1] == "<img src=ovca_mala.jpg />") {
+                    Zvukovi[4].play();
+                }; 
+                if(memory_values[1] == "<img src=pas_mali.jpg />") {
+                    Zvukovi[5].play();
+                };
+                if(memory_values[1] == "<img src=krava_mala.jpg />") {
+                    Zvukovi[6].play();
+                };
+                if(memory_values[1] == "<img src=svinja_mala.jpg />") {
+                    Zvukovi[7].play();
+                };
+                if(memory_values[1] == "<img src=guska_mala.jpg />") {
+                    Zvukovi[8].play();
+                }; 
+                if(memory_values[1] == "<img src=pile_malo.jpg />") {
+                    Zvukovi[9].play();
+                };
+                if(memory_values[1] == "<img src=slon_mali.jpg />") {
+                    Zvukovi[10].play();
+                };
+                if(memory_values[1] == "<img src=konj_mali.jpg />") {
+                    Zvukovi[11].play();
+                };
+                
+                
+                if(memory_values[0] == memory_values[1])  {
+                    tiles_flipped += 2;
+                    // clear both arrays
+                    memory_values = [];
+                    memory_tile_ids = [];
+                    // check to see if the whole board is cleared
+                    if(tiles_flipped == memory_array.length)  {
+                        Zvukovi[12].play;
+
+                        alert("Sve upareno u " + rezultat + " pokušaja. Hoćeš ponovo");
+                        document.getElementById('memory_board').innerHTML = "";
+                        newBoard();
+                    }
+                } else  {
+                    function flip2Back()  {
+                        // Flip the 2 tiles back over
+                        var tile_1 = document.getElementById(memory_tile_ids[0]);
+                        var tile_2 = document.getElementById(memory_tile_ids[1]);
+                        tile_1.style.background = 'url(kockica.jpg) no-repeat';
+                        tile_1.innerHTML = "";
+                        tile_2.style.background = 'url(kockica.jpg) no-repeat';
+                        tile_2.innerHTML = "";
+                        // clear both arrays
+                        memory_values = [];
+                        memory_tile_ids =[];
+                    }
+                    setTimeout(flip2Back,3000);
+                }
+            }
+        }
+    }
+
+</script>
+</head>
+<body>
+<div id="memory_board"></div>
+<script>newBoard();</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
